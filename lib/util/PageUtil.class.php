@@ -19,8 +19,6 @@ class PageUtil {
 	 */
 	protected static $pageClasses = [
 		'HomePage',
-		'LoginPage',
-		'SubHomePage'
 	];
 
 	/**

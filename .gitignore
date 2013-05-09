@@ -3,3 +3,4 @@
 /log/*
 /gitpull.php
 /config/config.yml
+/lib/model/page/boardConfig.inc.php
