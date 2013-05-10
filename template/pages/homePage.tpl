@@ -27,7 +27,7 @@
 						<div class="postright">
 							<h3>Regeln</h3>
 							<div class="postmsg">
-								{$entry.message}
+								{$entry.message|parseMessage}
 							</div>
 							<div class="postsignature postmsg"><hr /></div>
 						</div>

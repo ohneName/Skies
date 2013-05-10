@@ -45,3 +45,22 @@ favicon: images/favicon.png
 
 # Favicon MIME type
 faviconMime: image/png
+
+# Board values
+board:
+
+    # Which one is the news forum?
+    newsForum: 2
+
+    # Info thread
+    infoPosts:
+        - 1
+        - 3
+        - 3
+        - 7
+
+    # Rules thread
+    rulesTopic: 4
+
+    # Board URL
+    boardUrl: http://forum.url/

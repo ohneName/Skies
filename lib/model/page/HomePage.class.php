@@ -7,14 +7,14 @@
 
 namespace skies\model\page;
 
+use skies\model\BoardSqlPage;
 use skies\model\Page;
-use skies\system\database\Database;
 use skies\system\exception\SystemException;
 
 /**
  * Main page
  */
-class HomePage extends Page {
+class HomePage extends BoardSqlPage {
 
 	/**
 	 * Prepare the output
@@ -24,41 +24,10 @@ class HomePage extends Page {
 	 */
 	public function prepare() {
 
-		// NULL values
-		$dbHost = $dbUser = $dbPassword = $dbName = '';
-		$dbPort = 0;
-		$dbType = 'skies\system\database\MysqlDatabase';
-
-		// Fetch configuration
-		require_once ROOT_DIR.'lib/boardConfig.inc.php';
-
-		$boardDb = new $dbType($dbHost, $dbUser, $dbPassword, $dbName, $dbPort);
-
-		if(!$boardDb instanceof Database || !$boardDb->isSupported()) {
-			throw new SystemException('Failed to create database object.', 0, 'Failed to create Database object or database type is not supported.');
-		}
-
 		// Fetch posts
-		$query = $boardDb->prepare('SELECT * FROM `topics` INNER JOIN `posts` ON `topics`.`first_post_id` = `posts`.`id` WHERE `topics`.`forum_id` = 2 ORDER BY `topics`.`posted` DESC LIMIT 5');
+		$query = $this->boardDb->prepare('SELECT * FROM `topics` INNER JOIN `posts` ON `topics`.`first_post_id` = `posts`.`id` WHERE `topics`.`forum_id` = :newsForum AND `sticky` = 0 ORDER BY `topics`.`posted` DESC LIMIT 5');
 
-		$query->execute();
-
-		// Load BBCode parser
-		define('PUN', true);
-		define('PUN_ROOT', ROOT_DIR.'lib/fluxbb/');
-
-		// Settings
-		$GLOBALS['pun_config'] = [
-			'o_censoring' => 0,
-			'o_smilies' => 0,
-			'p_message_bbcode' => 1,
-			'p_message_img_tag' => 1,
-			'o_base_url' => 'http://ufen.skyirc.net/forum',
-		];
-
-		require_once ROOT_DIR.'lib/fluxbb/include/utf8/trim.php';
-		require_once ROOT_DIR.'lib/fluxbb/include/functions.php';
-		require_once ROOT_DIR.'lib/fluxbb/include/parser.php';
+		$query->execute([':newsForum' => \Skies::getConfig()['board']['newsForum']]);
 
 		$news = [];
 
@@ -69,14 +38,14 @@ class HomePage extends Page {
 				'poster' => $newsArray['poster'],
 				'posterId' => $newsArray['poster_id'],
 				'subject' => $newsArray['subject'],
-				'message' => parse_message($newsArray['message'], false),
+				'message' => $newsArray['message'],
 				'replyCount' => $newsArray['num_replies'],
 				'timePosted' => $newsArray['posted']
 			];
 
 		}
 
-		\Skies::getTemplate()->assign(['news' => $news, 'boardUrl' => $GLOBALS['pun_config']['o_base_url']]);
+		\Skies::getTemplate()->assign(['news' => $news, 'boardUrl' => \Skies::getConfig()['board']['boardUrl']]);
 
 	}
 

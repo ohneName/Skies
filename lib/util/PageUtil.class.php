@@ -19,6 +19,8 @@ class PageUtil {
 	 */
 	protected static $pageClasses = [
 		'HomePage',
+		'InfoPage',
+		'RulesPage',
 	];
 
 	/**
