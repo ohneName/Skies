@@ -19,6 +19,18 @@
 					</div>
 				</div>
 
+				<div id="brdwelcome" class="inbox">
+					<div class="conl">
+						<span id="statusServerStatus">Lade ...</span>
+					</div>
+					<div class="conr">
+						<span id="statusPlayerCount">Lade ...</span>
+					</div>
+					<div class="clearer"></div>
+				</div>
+
+				<div id="statusPlayers" style="float: right; width: 200px; text-align: right;"></div>
+
 				<div id="brdmain">
 
 					{include file="notifications.tpl"}
