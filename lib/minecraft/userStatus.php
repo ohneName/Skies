@@ -11,9 +11,10 @@ require_once 'init.php';
 
 if($serverStatus->Get('online') && isset($_POST['userName'])) {
 
-
-	if(in_array($_POST['userName'], $serverStatus->Get('players'))) {
-		echo 'Spielt gerade auf dem Server.';
+	if(is_array($serverStatus->Get('players')) && count($serverStatus->Get('players')) > 0) {
+		if(in_array($_POST['userName'], $serverStatus->Get('players'))) {
+			echo 'Spielt gerade auf dem Server.';
+		}
 	}
 
 }
