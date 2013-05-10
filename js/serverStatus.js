@@ -1,9 +1,11 @@
+var baseUrl = 'http://ufen.skyirc.net/';
+
 
 jQuery.fn.mcServerStatus = function(Host, Port) {
 
 	var container = jQuery(this);
 
-	jQuery.post("/lib/minecraft/serverStatus.php", {
+	jQuery.post(baseUrl + "lib/minecraft/serverStatus.php", {
 			host: Host,
 			port: Port
 		}, function(data) {
@@ -17,7 +19,7 @@ jQuery.fn.mcPlayerCount = function(Host, Port) {
 
 	var container = jQuery(this);
 
-	jQuery.post("/lib/minecraft/playerCount.php", {
+	jQuery.post(baseUrl + "lib/minecraft/playerCount.php", {
 			host: Host,
 			port: Port
 		}, function(data) {
@@ -31,11 +33,28 @@ jQuery.fn.mcPlayers = function(Host, Port) {
 
 	var container = jQuery(this);
 
-	jQuery.post("/lib/minecraft/players.php", {
+	jQuery.post(baseUrl + "lib/minecraft/players.php", {
 			host: Host,
 			port: Port
 		}, function(data) {
 			container.html(data);
+		}
+	);
+
+};
+
+jQuery.fn.mcUserStatus = function(Host, Port) {
+
+	var container = jQuery(this);
+
+	var playerName = container.find('input.mcUser').val();
+
+	jQuery.post(baseUrl + "lib/minecraft/userStatus.php", {
+			host: Host,
+			port: Port,
+			userName: playerName
+		}, function(data) {
+			container.find('.status').html(data);
 		}
 	);
 
@@ -55,6 +74,9 @@ function getServerStatus() {
 
 	// Players avatars
 	jQuery("#statusPlayers").mcPlayers('silexboard.org', 25565);
+
+	// User status
+	jQuery('.mcUserStatus').mcUserStatus('silexboard.org', 25565);
 
 }
 

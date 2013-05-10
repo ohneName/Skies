@@ -9,14 +9,11 @@ require_once 'init.php';
 
 /** @var $serverStatus MinecraftServerStatus */
 
-if($serverStatus->Get('online')) {
+if($serverStatus->Get('online') && isset($_POST['userName'])) {
 
-	if(is_array($serverStatus->Get('players')) && count($serverStatus->Get('players')) > 0) {
-		foreach($serverStatus->Get('players') as $player) {
 
-			echo '<img src="https://minotar.net/helm/'.$player.'/32.png" title="'.$player.'" style="padding-left: 5px;" />';
-
-		}
+	if(in_array($_POST['userName'], $serverStatus->Get('players'))) {
+		echo 'Spielt gerade auf dem Server.';
 	}
 
 }

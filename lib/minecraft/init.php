@@ -18,3 +18,5 @@ if(isset($_POST['port']))
 require_once 'MinecraftServerStatus.class.php';
 
 $serverStatus = new MinecraftServerStatus($host, $port, 2);
+
+header('Access-Control-Allow-Origin: *');
