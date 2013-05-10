@@ -30,7 +30,7 @@ class HomePage extends Page {
 		$dbType = 'skies\system\database\MysqlDatabase';
 
 		// Fetch configuration
-		require_once ROOT_DIR.'lib/model/page/boardConfig.inc.php';
+		require_once ROOT_DIR.'lib/boardConfig.inc.php';
 
 		$boardDb = new $dbType($dbHost, $dbUser, $dbPassword, $dbName, $dbPort);
 
@@ -43,6 +43,23 @@ class HomePage extends Page {
 
 		$query->execute();
 
+		// Load BBCode parser
+		define('PUN', true);
+		define('PUN_ROOT', ROOT_DIR.'lib/fluxbb/');
+
+		// Settings
+		$GLOBALS['pun_config'] = [
+			'o_censoring' => 0,
+			'o_smilies' => 0,
+			'p_message_bbcode' => 1,
+			'p_message_img_tag' => 1,
+			'o_base_url' => 'http://ufen.skyirc.net/forum',
+		];
+
+		require_once ROOT_DIR.'lib/fluxbb/include/utf8/trim.php';
+		require_once ROOT_DIR.'lib/fluxbb/include/functions.php';
+		require_once ROOT_DIR.'lib/fluxbb/include/parser.php';
+
 		$news = [];
 
 		foreach($query->fetchAllArray() as $newsArray) {
@@ -52,14 +69,14 @@ class HomePage extends Page {
 				'poster' => $newsArray['poster'],
 				'posterId' => $newsArray['poster_id'],
 				'subject' => $newsArray['subject'],
-				'message' => $newsArray['message'],
+				'message' => parse_message($newsArray['message'], false),
 				'replyCount' => $newsArray['num_replies'],
 				'timePosted' => $newsArray['posted']
 			];
 
 		}
 
-		\Skies::getTemplate()->assign(['news' => $news]);
+		\Skies::getTemplate()->assign(['news' => $news, 'boardUrl' => $GLOBALS['pun_config']['o_base_url']]);
 
 	}
 
