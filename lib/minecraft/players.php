@@ -11,10 +11,27 @@ require_once 'init.php';
 
 if($serverStatus->Get('online')) {
 
+	$boardUrl = 'http://forum.ohne-name.de/';
+
 	if(is_array($serverStatus->Get('players')) && count($serverStatus->Get('players')) > 0) {
+
 		foreach($serverStatus->Get('players') as $player) {
 
-			echo '<img src="https://minotar.net/helm/'.$player.'/32.png" title="'.$player.'" style="padding-left: 5px;" />';
+			// Fetch from FluxBBrdige API
+			$json = (array) @json_decode(@file_get_contents($boardUrl.'fluxbbridge.php?action=profileLink&mcUser='.$player));
+
+			if($json !== null && isset($json['status']) && $json['status'] == 'ok') {
+
+				?>
+				<a href="<?=$json['message']?>"><img src="https://minotar.net/helm/<?=$player?>/32.png" title="<?=$player?> (<?=$json['boardUser']?>)" style="padding-left: 5px;" /></a>
+				<?php
+
+			}
+			else {
+				?>
+				<img src="https://minotar.net/helm/<?=$player?>/32.png" title="<?=$player?>" style="padding-left: 5px;" />
+				<?php
+			}
 
 		}
 	}

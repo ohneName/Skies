@@ -6,7 +6,7 @@
  */
 
 // Initialize status
-$host = 'silexboard.org';
+$host = 'server.ohne-name.de';
 $port = 25565;
 
 if(isset($_POST['host']))

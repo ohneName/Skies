@@ -1,4 +1,4 @@
-var baseUrl = 'http://ufen.skyirc.net/';
+var baseUrl = 'http://ohne-name.de/';
 
 
 jQuery.fn.mcServerStatus = function(Host, Port) {
@@ -67,16 +67,16 @@ jQuery.fn.mcUserStatus = function(Host, Port) {
 function getServerStatus() {
 
 	// Server status and version
-	jQuery("#statusServerStatus").mcServerStatus('silexboard.org', 25565);
+	jQuery("#statusServerStatus").mcServerStatus('server.ohne-name.de', 25565);
 
 	// Player count
-	jQuery("#statusPlayerCount").mcPlayerCount('silexboard.org', 25565);
+	jQuery("#statusPlayerCount").mcPlayerCount('server.ohne-name.de', 25565);
 
 	// Players avatars
-	jQuery("#statusPlayers").mcPlayers('silexboard.org', 25565);
+	jQuery("#statusPlayers").mcPlayers('server.ohne-name.de', 25565);
 
 	// User status
-	jQuery('.mcUserStatus').mcUserStatus('silexboard.org', 25565);
+	jQuery('.mcUserStatus').mcUserStatus('server.ohne-name.de', 25565);
 
 }
 
