@@ -20,6 +20,7 @@ $GLOBALS['pun_config'] = [
 	'o_base_url' => \Skies::getConfig()['board']['boardUrl'],
 ];
 
+require_once ROOT_DIR.'lib/fluxbb/include/utf8/mbstring/core.php';
 require_once ROOT_DIR.'lib/fluxbb/include/utf8/trim.php';
 require_once ROOT_DIR.'lib/fluxbb/include/functions.php';
 require_once ROOT_DIR.'lib/fluxbb/include/parser.php';
