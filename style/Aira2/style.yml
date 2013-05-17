@@ -26,7 +26,7 @@ meta:
 ### Files ###
 
 # Stylesheet for error pages
-errorCss: css/error.css
+errorCss: error.css
 
 # Stylesheet files relative to the style directory (comma separated list, with spaces)
 cssFiles:
