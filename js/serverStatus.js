@@ -1,64 +1,71 @@
 var baseUrl = 'http://ohne-name.de/';
 
+(function($) {
 
-jQuery.fn.mcServerStatus = function(Host, Port) {
+	$.fn.mcServerStatus = function(Host, Port) {
 
-	var container = jQuery(this);
+		var container = $(this);
 
-	jQuery.post(baseUrl + "lib/minecraft/serverStatus.php", {
-			host: Host,
-			port: Port
-		}, function(data) {
-			container.html(data);
-		}
-	);
+		$.post(baseUrl + "lib/minecraft/serverStatus.php", {
+				host: Host,
+				port: Port
+			}, function(data) {
+				container.html(data);
+			}
+		);
 
-};
+	};
 
-jQuery.fn.mcPlayerCount = function(Host, Port) {
+	$.fn.mcPlayerCount = function(Host, Port) {
 
-	var container = jQuery(this);
+		var container = $(this);
 
-	jQuery.post(baseUrl + "lib/minecraft/playerCount.php", {
-			host: Host,
-			port: Port
-		}, function(data) {
-			container.html(data);
-		}
-	);
+		$.post(baseUrl + "lib/minecraft/playerCount.php", {
+				host: Host,
+				port: Port
+			}, function(data) {
+				container.html(data);
+			}
+		);
 
-};
+	};
 
-jQuery.fn.mcPlayers = function(Host, Port) {
+	$.fn.mcPlayers = function(Host, Port) {
 
-	var container = jQuery(this);
+		var container = $(this);
 
-	jQuery.post(baseUrl + "lib/minecraft/players.php", {
-			host: Host,
-			port: Port
-		}, function(data) {
-			container.html(data);
-		}
-	);
+		$.post(baseUrl + "lib/minecraft/players.php", {
+				host: Host,
+				port: Port
+			}, function(data) {
+				container.html(data);
+			}
+		);
 
-};
+	};
 
-jQuery.fn.mcUserStatus = function(Host, Port) {
+	$.fn.mcUserStatus = function(Host, Port) {
 
-	var container = jQuery(this);
+		this.each(function() {
 
-	var playerName = container.find('input.mcUser').val();
+			var container = $(this);
 
-	jQuery.post(baseUrl + "lib/minecraft/userStatus.php", {
-			host: Host,
-			port: Port,
-			userName: playerName
-		}, function(data) {
-			container.find('.status').html(data);
-		}
-	);
+			var playerName = container.find('input.mcUser').val();
 
-};
+			$.post(baseUrl + "lib/minecraft/userStatus.php", {
+					host: Host,
+					port: Port,
+					userName: playerName
+				}, function(data) {
+					container.find('.status').html(data);
+				}
+			);
+
+		});
+
+	};
+
+})(jQuery);
 
 /*
  * Container beschreiben
@@ -67,16 +74,16 @@ jQuery.fn.mcUserStatus = function(Host, Port) {
 function getServerStatus() {
 
 	// Server status and version
-	jQuery("#statusServerStatus").mcServerStatus('server.ohne-name.de', 25565);
+	$("#statusServerStatus").mcServerStatus('server.ohne-name.de', 25565);
 
 	// Player count
-	jQuery("#statusPlayerCount").mcPlayerCount('server.ohne-name.de', 25565);
+	$("#statusPlayerCount").mcPlayerCount('server.ohne-name.de', 25565);
 
 	// Players avatars
-	jQuery("#statusPlayers").mcPlayers('server.ohne-name.de', 25565);
+	$("#statusPlayers").mcPlayers('server.ohne-name.de', 25565);
 
 	// User status
-	jQuery('.mcUserStatus').mcUserStatus('server.ohne-name.de', 25565);
+	$('.mcUserStatus').mcUserStatus('server.ohne-name.de', 25565);
 
 }
 
@@ -87,12 +94,7 @@ function reloadStatus() {
 	getServerStatus();
 }
 
-function restartTimer() {
-	clearInterval(timer);
-	timer = setInterval(reloadStatus, 30000);
-}
-
 // Beim Seitenaufruf laden
-jQuery(document).ready(function() {
+$(function() {
 	getServerStatus();
 });
